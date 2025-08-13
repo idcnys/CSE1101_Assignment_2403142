@@ -1,0 +1,20 @@
+## CSE 1101 Assignment (1-1)
+
+## BITTO SAHA - 2403142
+
+Finished at: **13/08/2025 00:05:26**
+Last updated at: **13/08/2025 16:05:44**
+
+# How to use?
+
+- `app.exe` controls the routing for the whole app.
+- `system()` function that i have used for routine is OS(windows) specific.
+- Or You can simply run `admin.exe` & `client.exe` manually.
+
+# Resources
+
+- In `<stdlib.h>` there is a function called `system()`. It is used to execute an operating system command specified by the string 'command' from a c/c++ program. It returns an integer status indicating the success or failure of the command execution. This function is OS-dependent. We use `system("dir")`. [Source](https://www.tutorialspoint.com/c_standard_library/c_function_system.htm)
+
+- I used some ANSI COLORS to style the terminal output.
+  `#define RED "\x1b[31m"` `...` `#define RESET "\x1b[0m"`
+  It's very simple to use `printf("\n" GREEN "Colored String" RESET "\n ")`. [Source](https://stackoverflow.com/questions/3219393/stdlib-and-colored-output-in-c)
