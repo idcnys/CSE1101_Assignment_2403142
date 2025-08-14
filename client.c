@@ -20,7 +20,12 @@ int _CARD_SIZE = 32;
 int _LINE_SIZE = 42;
 int _PHONE_SIZE = 12;
 int _TIME_SIZE = 20;
-
+void resetCurrentNumber()
+{
+    FILE *fptr2 = fopen("user/number.txt", "w");
+    fprintf(fptr2, "%d", 0);
+    fclose(fptr2);
+}
 void updateSold(int min)
 {
     // sold name
@@ -87,7 +92,6 @@ void showMinutes()
 
     printf("%s minutes\n\n", bal);
 }
-
 void removeCard(int type, int lineNum)
 {
     char filename[6];
@@ -231,6 +235,12 @@ void commitRecharge(int min, int charge)
             char number[_PHONE_SIZE];
             fscanf(fptr2, "%11s", number);
             fclose(fptr2);
+
+            // now making other user login
+            FILE *rst = fopen("user/number.txt", "w");
+            fprintf(rst, "%d", 0);
+            fclose(rst);
+
             int count = 0;
             int ch;
 
@@ -251,6 +261,7 @@ void commitRecharge(int min, int charge)
             fprintf(fptr3, number);
             fprintf(fptr3, "\n");
             fclose(fptr3);
+
             printf(RED "Sorry Account blocked!" RESET "\n\n");
             exit(0);
         }
@@ -342,7 +353,8 @@ int checkifblocked()
 
     if (isBlocked(number))
     {
-        printf(RED "Sorry your account is blocked" RESET "\n\n\n");
+        resetCurrentNumber(); // allowing other users log in
+        printf(RED "Sorry your account is blocked" RESET "\n\n");
         return 1;
     }
     else
@@ -352,9 +364,7 @@ int checkifblocked()
 }
 void logOut()
 {
-    FILE *fptr = fopen("user/number.txt", "w");
-    fprintf(fptr, "%d", 0);
-    fclose(fptr);
+    resetCurrentNumber();
     printf("\n" GREEN "Logged out." RESET "\n");
 }
 void showDialog()
@@ -434,7 +444,14 @@ int main()
         }
         else
         {
-            printf("\n\n" GREEN " Welcome back! Logged in successfully." RESET "\n\n");
+            if (checkifblocked())
+            {
+                return 0;
+            }
+            else
+            {
+                printf("\n\n" GREEN " Welcome back! Logged in successfully." RESET "\n\n");
+            }
         }
         // registered now
         showDialog();
