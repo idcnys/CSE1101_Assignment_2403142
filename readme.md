@@ -2,6 +2,7 @@
 
 ## How to use?
 - `demo.mp4` explains the user interface. [See video](https://youtu.be/2giGPSrm0A0?si=aHWQkktIDZWQXa1A)
+- Make sure to compile `admin.c` `client.c` `app.c` before running their respective .exe
 - `app.exe` controls the routing for the whole app.
 - `system()` function that i have used for routine is OS(windows) specific.
 - Or You can simply run `admin.exe` & `client.exe` manually.
@@ -14,6 +15,7 @@
 - I used some ANSI COLORS to style the terminal output.
   `#define RED "\x1b[31m"` `...` `#define RESET "\x1b[0m"`
   It's very simple to use `printf("\n" GREEN "Colored String" RESET "\n ")`. [Source](https://stackoverflow.com/questions/3219393/stdlib-and-colored-output-in-c)
+
 
 
 
