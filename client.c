@@ -285,7 +285,14 @@ void makeRecharge()
     printf("Recharge Menu\n\n\t1. 40 min at Tk 50\n\t2. 60 min at Tk. 70\n\t3. 100 min at Tk. 120\n\n");
     int rch;
     printf("Select an option: ");
-    scanf("%d", &rch);
+    int typop = scanf("%d", &rch);
+    if (typop == 0)
+    {
+        printf("\n" RED "Sorry please enter an integer type data" RESET "\n");
+        char ch;
+        while ((ch = getchar()) != '\n' && ch != EOF)
+            ; // clear buffer
+    }
 
     if (rch == 1)
     {
@@ -380,7 +387,14 @@ void showDialog()
     {
         printf("[" MAGENTA "USER" RESET "] Enter your choice: ");
         int select;
-        scanf("%d", &select);
+        int typop = scanf("%d", &select);
+        if (typop == 0)
+        {
+            printf("\n" RED "Sorry please enter an integer type data" RESET "\n");
+            char ch;
+            while ((ch = getchar()) != '\n' && ch != EOF)
+                ; // clear buffer
+        }
         if (select == 0)
         {
             printf(YELLOW "User Menu:" RESET "\n\t1. Check Balance\n\t2. Recharge\n\t3. Log out\n\t4. Exit\n\n");
