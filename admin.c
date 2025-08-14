@@ -199,7 +199,7 @@ void deleteCard(int min)
 }
 void deleteDialog()
 {
-    printf("What type of card do you want to delete?\n\t1. 40min\n\t2. 60min\n\t3. 100min\n\n");
+    printf("What type of card do you want to delete?\n\t1. 40min\n\t2. 60min\n\t3. 100min\n\nEnter an option: ");
     int op;
     scanf("%d", &op);
     if (op == 1)
@@ -257,8 +257,31 @@ void unblock(int lineNum)
         return;
     }
 }
+
+void showBlockList()
+{
+    printf(YELLOW "Block List: " RESET "\n\n");
+    int count = 0;
+    FILE *fptr = fopen("admin/blocked.txt", "r");
+    char phn[_PHONE_SIZE];
+    while (fgets(phn, _PHONE_SIZE, fptr) != NULL)
+    {
+        if (strlen(phn) <= 1)
+            continue;
+        phn[strcspn(phn, "\n")] = 0;
+        printf("%s\n", phn);
+        count++;
+    }
+    if (count > 0)
+        printf(GREEN "Total %d numbers found in the list." RESET "\n", count);
+
+    fclose(fptr);
+}
 void unlockAccount()
 {
+
+    showBlockList();
+
     printf("Enter user Number: ");
     char user_phn[_PHONE_SIZE];
     getchar();
