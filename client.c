@@ -6,6 +6,7 @@
 
 // console colors
 // collected from https://stackoverflow.com/questions/3219393/stdlib-and-colored-output-in-c
+
 #define RED "\x1b[31m"
 #define GREEN "\x1b[32m"
 #define YELLOW "\x1b[33m"
@@ -14,12 +15,16 @@
 #define CYAN "\x1b[36m"
 #define RESET "\x1b[0m"
 
-int unsuccessful_attempts = 0;
+#define failed(x) printf(RED "%s" RESET, x)
+#define success(x) printf(GREEN "%s" RESET, x)
+#define warn(x) printf(YELLOW "%s" RESET, x)
 
+int unsuccessful_attempts = 0;
 int _CARD_SIZE = 32;
 int _LINE_SIZE = 42;
 int _PHONE_SIZE = 12;
 int _TIME_SIZE = 20;
+
 void resetCurrentNumber()
 {
     FILE *fptr2 = fopen("user/number.txt", "w");
@@ -28,11 +33,10 @@ void resetCurrentNumber()
 }
 void updateSold(int min)
 {
-    // sold name
     char filename[6];
     sprintf(filename, "%d", min);
-    char filepath[100] = "admin/sold/"; // parent folder
-    strcat(filepath, filename);         // the card type
+    char filepath[100] = "admin/sold/";
+    strcat(filepath, filename);
     strcat(filepath, ".txt");
 
     FILE *fptr = fopen(filepath, "r+");
@@ -84,7 +88,7 @@ void showMinutes()
     char bal[20];
     if (fscanf(fptr2, "%19s", bal) != 1)
     {
-        printf("0 minutes\n");
+        printf("0 minutes\n\n");
         fclose(fptr2);
         return;
     }
@@ -138,7 +142,6 @@ void removeCard(int type, int lineNum)
         return;
     }
 }
-
 void updateBalance(int val)
 {
     char filepathofuser[100] = "user/pack/";
@@ -191,7 +194,7 @@ void commitRecharge(int min, int charge)
 
         if (strcmp(user_card, real_card) == 0)
         {
-            printf("Card Found! at line %d in package list\n", lineNum + 1);
+            printf("Card is Valid! Found at line %d in package list\n", lineNum + 1);
 
             // remove the card
             // recharge the amount
@@ -277,7 +280,6 @@ void commitRecharge(int min, int charge)
     removeCard(min, lineNum + 1);
     printf("\n\n\t" GREEN "[OK] Account Recharged Successfully" RESET "\n\n");
 }
-
 void makeRecharge()
 {
     printf("Recharge Menu\n\n\t1. 40 min at Tk 50\n\t2. 60 min at Tk. 70\n\t3. 100 min at Tk. 120\n\n");
@@ -328,7 +330,8 @@ int isBlocked(char user_phn[])
 
         if (strcmp(user_phn, phn) == 0)
         {
-            printf("Card Found! at line %d\n", lineNum + 1);
+            printf("User is suspended.Found him at line %d\n", lineNum + 1);
+            printf("\n" YELLOW "logging him out..." RESET "\n");
 
             // remove the card
             found = 1;
@@ -412,6 +415,7 @@ int main()
     FILE *fptr = fopen("user/number.txt", "r+");
     char number[_PHONE_SIZE];
     fscanf(fptr, "%11s", number);
+
     if (strcmp(number, "0") == 0)
     {
         // not registered
@@ -422,7 +426,7 @@ int main()
         if (strlen(phn) != 11)
         {
 
-            printf("%d" RED " Invalid phone number" RESET, strlen(phn));
+            printf(RED "Invalid phone number. It must contain 11 digits. It has only %d digits." RESET "\n", strlen(phn));
             return 0;
         }
         fseek(fptr, 0, SEEK_SET);
@@ -440,17 +444,62 @@ int main()
             FILE *tmpup = fopen(filepathofuser, "w");
             fprintf(user_pack, "%d", 0);
             fclose(user_pack);
-            printf("\n\n" GREEN " Registration Successful." RESET "\n\n");
+
+            char filepathofuser2[100] = "user/pass/";
+            strcat(filepathofuser2, phn);
+            strcat(filepathofuser2, ".txt");
+
+            printf("\nSelect a Strong password: ");
+            char pass[500];
+            getchar();
+            fgets(pass, 500, stdin);
+            FILE *upass = fopen(filepathofuser2, "w");
+            fprintf(upass, pass);
+            fprintf(upass, "\n");
+            fclose(upass);
+
+            printf("\n\n" GREEN " Registration finished. Please remember your password." RESET "\n\n");
         }
         else
         {
-            if (checkifblocked())
+            printf("\n" GREEN "You already have an existing account. Enter the password below." RESET "\n");
+
+            printf("\nPassword: ");
+            char pass[500];
+            getchar();
+            fgets(pass, 500, stdin);
+
+            char fpath[100] = "user/pass/";
+            strcat(fpath, phn);
+            strcat(fpath, ".txt");
+            FILE *eupass = fopen(fpath, "r");
+            char savedpass[500];
+            fscanf(eupass, "%s", savedpass);
+
+            savedpass[strcspn(savedpass, "\n")] = 0;
+            pass[strcspn(pass, "\n")] = 0;
+            if (strcmp(savedpass, pass) == 0)
             {
-                return 0;
+                printf("\n" GREEN "Profile found! and password matched" RESET "\n");
+                if (checkifblocked())
+                {
+                    return 0;
+                }
+                else
+                {
+                    printf("\n\n" GREEN "Welcome back! Logged in successfully." RESET "\n\n");
+                }
             }
             else
             {
-                printf("\n\n" GREEN " Welcome back! Logged in successfully." RESET "\n\n");
+                // printf("saved : %s, entere: %s", savedpass, pass);
+                printf("\n" RED "Sorry wrong pasword. Try again later" RESET "\n");
+                FILE *fptr = fopen("user/number.txt", "w");
+                fprintf(fptr, "%d", 0);
+                fclose(fptr);
+                printf("\n" YELLOW "All sessions are cleared and program exited." RESET "\n");
+
+                exit(0);
             }
         }
         // registered now
