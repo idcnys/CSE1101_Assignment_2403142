@@ -274,6 +274,8 @@ void showBlockList()
     }
     if (count > 0)
         printf(GREEN "Total %d numbers found in the list." RESET "\n", count);
+    else
+        printf(GREEN "List is Empty" RESET "\n");
 
     fclose(fptr);
 }
