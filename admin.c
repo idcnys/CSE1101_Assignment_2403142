@@ -53,8 +53,10 @@ void _MASTER_RESET()
 
 #ifdef _WIN32
     system("del /Q user\\pack\\*"); // Windows
+    system("del /Q user\\pass\\*"); // Windows
 #else
     system("rm -f user/pack/*"); // Linux/macOS
+    system("rm -f user/pass/*"); // Linux/macOS
 #endif
 
     printf("\n" GREEN "Successfully cleared all data." RESET "\n");
