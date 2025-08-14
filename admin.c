@@ -95,9 +95,30 @@ void generateCardAndAppend(int type)
 
 void cardDialog()
 {
-    printf("Enter the amount and type(min) space seperated: ");
-    int amount, type;
-    scanf("%d %d", &amount, &type);
+
+    printf("Enter the amount of cards: ");
+    int amount;
+    int typop1 = scanf("%d", &amount);
+    if (typop1 == 0)
+    {
+        printf("\n" RED "Sorry please enter an integer type data" RESET "\n");
+        char ch;
+        while ((ch = getchar()) != '\n' && ch != EOF)
+            ;
+        amount = 0;
+    }
+
+    printf("\n Enter the type of card. 1. 40min 2. 60min 3. 100min : ");
+    int type;
+    int typop2 = scanf("%d", &type);
+    if (typop2 == 0)
+    {
+        printf("\n" RED "Sorry please enter an integer type data" RESET "\n");
+        char ch;
+        while ((ch = getchar()) != '\n' && ch != EOF)
+            ;
+        type = 40;
+    }
 
     for (int i = 0; i < amount; i++)
     {
@@ -203,7 +224,14 @@ void deleteDialog()
 {
     printf("What type of card do you want to delete?\n\t1. 40min\n\t2. 60min\n\t3. 100min\n\nEnter an option: ");
     int op;
-    scanf("%d", &op);
+    int typop = scanf("%d", &op);
+    if (typop == 0)
+    {
+        printf("\n" RED "Sorry please enter an integer type data" RESET "\n");
+        char ch;
+        while ((ch = getchar()) != '\n' && ch != EOF)
+            ; // clear buffer
+    }
     if (op == 1)
     {
         deleteCard(40);
@@ -323,7 +351,7 @@ void unlockAccount()
     }
     else
     {
-        printf("The number is not in the blocked list\n");
+        printf(RED "The number is not in the blocked list" RESET "\n");
     }
 }
 
@@ -612,7 +640,14 @@ int main()
     {
         printf("[" GREEN "ADMIN" RESET "] Enter your choice: ");
         int op;
-        scanf("%d", &op);
+        int typop = scanf("%d", &op);
+        if (typop == 0)
+        {
+            printf("\n" RED "Sorry please enter an integer type data!" RESET "\n");
+            char ch;
+            while ((ch = getchar()) != '\n' && ch != EOF)
+                ; // clear buffer
+        }
         if (op == 0)
         {
             printf("\n" YELLOW "The Admin Menu:" RESET "\n\t0. Menu\n\t1. New Card\n\t2. Delete Card\n\t3. Unlock Account\n\t4. History\n\t5. Statistics\n\t6. Search\n\t7. Exit\n\n");
