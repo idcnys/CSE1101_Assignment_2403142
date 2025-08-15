@@ -108,7 +108,7 @@ void cardDialog()
         amount = 0;
     }
 
-    printf("\n Enter the type of card. 1. 40min 2. 60min 3. 100min : ");
+    printf("\n Enter the type of card (40/60/100): ");
     int type;
     int typop2 = scanf("%d", &type);
     if (typop2 == 0)
@@ -201,7 +201,7 @@ void deleteCard(int min)
 
         if (strcmp(entered_card, real_card) == 0)
         {
-            printf("Card Found! at line %d\n", lineNum + 1);
+            printf(GREEN "Card Found! at line %d" RESET "\n", lineNum + 1);
 
             // remove the card
             found = 1;
@@ -212,7 +212,7 @@ void deleteCard(int min)
 
     if (!found)
     {
-        printf("Card does not exist!\n");
+        printf(RED "Card does not exist!" RESET "\n");
         return;
     }
 
