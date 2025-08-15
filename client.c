@@ -194,7 +194,7 @@ void commitRecharge(int min, int charge)
 
         if (strcmp(user_card, real_card) == 0)
         {
-            printf("Card is Valid! Found at line %d in package list\n", lineNum + 1);
+            printf(GREEN "Card is Valid! Found at line %d in package list" RED "\n", lineNum + 1);
 
             // remove the card
             // recharge the amount
@@ -282,7 +282,7 @@ void commitRecharge(int min, int charge)
 }
 void makeRecharge()
 {
-    printf("Recharge Menu\n\n\t1. 40 min at Tk 50\n\t2. 60 min at Tk. 70\n\t3. 100 min at Tk. 120\n\n");
+    printf(YELLOW "Recharge Menu" RESET "\n\n\t1. 40 min at Tk 50\n\t2. 60 min at Tk. 70\n\t3. 100 min at Tk. 120\n\n");
     int rch;
     printf("Select an option: ");
     int typop = scanf("%d", &rch);
@@ -337,7 +337,7 @@ int isBlocked(char user_phn[])
 
         if (strcmp(user_phn, phn) == 0)
         {
-            printf("User is suspended.Found him at line %d\n", lineNum + 1);
+            printf(RED "User is suspended. Found him at line" RESET " %d\n", lineNum + 1);
             printf("\n" YELLOW "logging him out..." RESET "\n");
 
             // remove the card
