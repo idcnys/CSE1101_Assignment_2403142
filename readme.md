@@ -4,9 +4,7 @@
 - `demo.mp4` explains the user interface. [See video](https://youtu.be/2giGPSrm0A0?si=aHWQkktIDZWQXa1A)
 - just compile and run `app.c`
 - Admin password is `61770`
-- There is an admin command `404` which will reset all files (History, login, transactions,...) so that we can test it from scratch.
-  <img width="350" alt="Image" src="https://github.com/user-attachments/assets/607c588d-635f-420c-b06e-b9fa5cf8c89e" />
-
+- 
 ## Resources
 
 - I used some ANSI COLORS to style the terminal output.
@@ -41,6 +39,7 @@
   
 
      
+
 
 
 
