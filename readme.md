@@ -4,7 +4,7 @@
 - `demo.mp4` explains the user interface. [See video](https://youtu.be/2giGPSrm0A0?si=aHWQkktIDZWQXa1A)
 - just compile and run `app.c`
 - Admin password is `61770`
-- 
+
 ## Resources
 
 - I used some ANSI COLORS to style the terminal output.
@@ -39,6 +39,7 @@
   
 
      
+
 
 
 
