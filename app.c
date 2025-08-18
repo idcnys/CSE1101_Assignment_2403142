@@ -632,10 +632,7 @@ void adminPanel()
             printf(GREEN "Returning to main menu\n" RESET);
             break;
         }
-        else if (op == 404)
-        {
-            _MASTER_RESET();
-        }
+        
         else
         {
             printf(RED "Invalid Selection!" RESET "\n");
