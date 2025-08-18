@@ -36,9 +36,77 @@
      ---
   This project is for educational purpose only.
 
+
+  # Function Explanations
+
+## Core System Functions
+- `_SETUP()`  
+  Creates directories and files. Initializes default values. First-time setup.
+
+## Card Management
+- `generateCardAndAppend()`  
+  Generates random card numbers. Saves to appropriate file.
+- `removeCard()`  
+  Deletes specific card from FreshCards.
+- `deleteCard()`  
+  Finds and removes card by number.
+- `deleteDialog()`  
+  UI for card deletion options.
+
+## Admin Functions
+- `unblock()`  
+  Removes number from blocked list.
+- `showBlockList()`  
+  Displays all blocked numbers.
+- `unlockAccount()`  
+  Unblocks user account.
+- `showStatistics()`  
+  Displays sales and stock data.
+- `showHistory()`  
+  Shows all transactions.
+- `searchUserTransaction()`  
+  Finds transactions by phone number.
+
+## Transaction Processing
+- `updateSold()`  
+  Increments sold card count.
+- `updateAdminBalance()`  
+  Updates admin's balance.
+- `commitRecharge()`  
+  Validates and processes card recharge.
+
+## User Functions
+- `showMinutes()`  
+  Displays user's remaining minutes.
+- `updateBalance()`  
+  Updates user's minute balance.
+- `isBlocked()`  
+  Checks if user is blocked.
+- `logOut()`  
+  Clears current session.
+- `clientPanel()`  
+  Main user interface handler.
+
+## Utilities
+- `formatDate()`  
+  Converts timestamp to readable format.
+- `resetCurrentNumber()`  
+  Clears current user session.
+- `checkIfBlocked()`  
+  Verifies if current user is blocked.
+
+## Main Interfaces
+- `adminPanel()`  
+  Admin control interface.
+- `showDialog()`  
+  User menu interface.
+- `main()`  
+  Entry point with role selection.
+
   
 
      
+
 
 
 
