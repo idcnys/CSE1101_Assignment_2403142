@@ -92,11 +92,9 @@ void generateCardAndAppend(int type)
     {
         card_number[i] = (rand() % (9 - 0 + 1)) + 0;
     }
-    char filename[6];
-    sprintf(filename, "%d", type);
-    char filepath[100] = "FreshCards/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
+
+    char filepath[100];
+    sprintf(filepath, "FreshCards/%d.txt", type);
 
     FILE *fptr = fopen(filepath, "a");
     for (int i = 0; i < 20; i++)
@@ -119,7 +117,6 @@ void cardDialog()
             ;
         amount = 0;
     }
-
     printf("\n Enter the type of card (40/60/100): ");
     int type;
     int typop2 = scanf("%d", &type);
@@ -131,7 +128,6 @@ void cardDialog()
             ;
         type = 40;
     }
-
     for (int i = 0; i < amount; i++)
     {
         generateCardAndAppend(type);
@@ -141,23 +137,16 @@ void cardDialog()
 
 void removeCard(int type, int lineNum)
 {
-    char filename[6];
-    sprintf(filename, "%d", type);
-    char filepath[100] = "FreshCards/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
-
+    char filepath[100];
+    sprintf(filepath, "FreshCards/%d.txt", type);
     FILE *realfile = fopen(filepath, "r");
     FILE *tmpfile = fopen("FreshCards/temp.txt", "w");
-
     char real_card[_CARD_SIZE];
     int check_line = 1;
-
     while (fgets(real_card, _CARD_SIZE, realfile) != NULL)
     {
         if (strlen(real_card) <= 1)
             continue;
-        real_card[strcspn(real_card, "\n")] = 0;
 
         if (check_line != lineNum)
         {
@@ -188,11 +177,8 @@ void deleteCard(int min)
     fgets(entered_card, _CARD_SIZE, stdin);
     entered_card[strcspn(entered_card, "\n")] = 0;
 
-    char filename[6];
-    sprintf(filename, "%d", min);
-    char filepath[100] = "FreshCards/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
+    char filepath[100];
+    sprintf(filepath, "FreshCards/%d.txt", min);
 
     FILE *fptr = fopen(filepath, "r");
     char real_card[_CARD_SIZE];
@@ -354,11 +340,8 @@ void unlockAccount()
 
 void showSoldCards(int min)
 {
-    char filename[6];
-    sprintf(filename, "%d", min);
-    char filepath[100] = "admin/sold/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
+    char filepath[100];
+    sprintf(filepath, "admin/sold/%d.txt", min);
 
     FILE *fptr = fopen(filepath, "r");
     char sold_count[6];
@@ -368,11 +351,8 @@ void showSoldCards(int min)
 }
 void showSoldCardsInTaka(int min)
 {
-    char filename[6];
-    sprintf(filename, "%d", min);
-    char filepath[100] = "admin/sold/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
+    char filepath[100];
+    sprintf(filepath, "admin/sold/%d.txt", min);
 
     FILE *fptr = fopen(filepath, "r");
     char sold_count[6];
@@ -392,11 +372,8 @@ void showSoldCardsInTaka(int min)
 
 void showStock(int min)
 {
-    char filename[6];
-    sprintf(filename, "%d", min);
-    char filepath[100] = "FreshCards/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
+    char filepath[100];
+    sprintf(filepath, "FreshCards/%d.txt", min);
 
     FILE *fptr = fopen(filepath, "r");
     char real_card[_CARD_SIZE];
@@ -459,11 +436,8 @@ void formatDate(char stamp[])
 }
 void showTransaction(int min)
 {
-    char filename[6];
-    sprintf(filename, "%d", min);
-    char filepath[100] = "UsedCards/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
+    char filepath[100];
+    sprintf(filepath, "UsedCards/%d.txt", min);
 
     FILE *fptr = fopen(filepath, "r");
     char line[44];
@@ -518,11 +492,8 @@ void showHistory()
 
 void showUserTransaction(char phn[], int min)
 {
-    char filename[6];
-    sprintf(filename, "%d", min);
-    char filepath[100] = "UsedCards/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
+    char filepath[100];
+    sprintf(filepath, "UsedCards/%d.txt", min);
 
     FILE *fptr = fopen(filepath, "r");
     char line[44];
@@ -632,7 +603,7 @@ void adminPanel()
             printf(GREEN "Returning to main menu\n" RESET);
             break;
         }
-        
+
         else
         {
             printf(RED "Invalid Selection!" RESET "\n");
@@ -649,11 +620,8 @@ void resetCurrentNumber()
 
 void updateSold(int min)
 {
-    char filename[6];
-    sprintf(filename, "%d", min);
-    char filepath[100] = "admin/sold/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
+    char filepath[100];
+    sprintf(filepath, "admin/sold/%d.txt", min);
 
     FILE *fptr = fopen(filepath, "r+");
     char count[11];
@@ -742,11 +710,8 @@ void commitRecharge(int min, int charge)
     fgets(user_card, _CARD_SIZE, stdin);
     user_card[strcspn(user_card, "\n")] = 0;
 
-    char filename[6];
-    sprintf(filename, "%d", min);
-    char filepath[100] = "FreshCards/";
-    strcat(filepath, filename);
-    strcat(filepath, ".txt");
+    char filepath[100];
+    sprintf(filepath, "FreshCards/%d.txt", min);
 
     FILE *fptr = fopen(filepath, "r");
     char real_card[_CARD_SIZE];
@@ -983,9 +948,9 @@ void clientPanel()
         fprintf(fptr, "%s", phn);
         fclose(fptr);
 
-        char filepathofuser[100] = "user/pack/";
-        strcat(filepathofuser, phn);
-        strcat(filepathofuser, ".txt");
+        char filepathofuser[100];
+        sprintf(filepathofuser, "user/pack/%s.txt", phn);
+
         FILE *user_pack = fopen(filepathofuser, "r");
 
         if (!user_pack)
@@ -994,9 +959,8 @@ void clientPanel()
             fprintf(tmpup, "%d", 0);
             fclose(tmpup);
 
-            char filepathofuser2[100] = "user/pass/";
-            strcat(filepathofuser2, phn);
-            strcat(filepathofuser2, ".txt");
+            char filepathofuser2[100];
+            sprintf(filepathofuser2, "user/pass/%s.txt", phn);
 
             printf("\nSelect a Strong password: ");
             char pass[500];
@@ -1018,9 +982,9 @@ void clientPanel()
             getchar();
             fgets(pass, 500, stdin);
 
-            char fpath[100] = "user/pass/";
-            strcat(fpath, phn);
-            strcat(fpath, ".txt");
+            char fpath[100];
+            sprintf(fpath, "user/pass/%s.txt", phn);
+
             FILE *eupass = fopen(fpath, "r");
             char savedpass[500];
             fscanf(eupass, "%s", savedpass);
@@ -1061,6 +1025,7 @@ void clientPanel()
     }
 }
 // ***MAIN APP***
+
 int main()
 {
     srand(time(NULL));
@@ -1080,7 +1045,6 @@ int main()
                 ;
             continue;
         }
-
         if (op == 1)
         {
             printf("Enter Admin password: ");
@@ -1095,7 +1059,6 @@ int main()
             else
             {
                 printf(RED "Sorry authentication failed!\nRestart or (Press enter)\n" RESET);
-                getch();
             }
         }
         else if (op == 2)
@@ -1106,7 +1069,6 @@ int main()
         else if (op == 3)
         {
             printf("\n\tThanks for using. Press any key to close :)\n\n");
-            getch();
             break;
         }
         else
@@ -1114,6 +1076,5 @@ int main()
             printf(RED "Sorry That option does not exist. Try again later" RESET "\n\n");
         }
     }
-
     return 0;
 }
