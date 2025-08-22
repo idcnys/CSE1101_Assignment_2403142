@@ -8,8 +8,8 @@
 #include <direct.h>
 #else
 #include <sys/stat.h>
+#define _mkdir(x) mkdir(x, 0755)
 #endif
-
 // Console colors
 #define RED "\x1b[31m"
 #define GREEN "\x1b[32m"
@@ -18,7 +18,6 @@
 #define MAGENTA "\x1b[35m"
 #define CYAN "\x1b[36m"
 #define RESET "\x1b[0m"
-
 // Global constants
 int totalTransactions = 0;
 int trans40 = 0;
@@ -29,12 +28,9 @@ int _CARD_SIZE = 32;
 int _LINE_SIZE = 42;
 int _PHONE_SIZE = 12;
 int _TIME_SIZE = 20;
-
 // To create all files and needed directories
 void _SETUP()
 {
-
-#ifdef _WIN32
     _mkdir("admin");
     _mkdir("admin/sold");
     _mkdir("user");
@@ -42,16 +38,6 @@ void _SETUP()
     _mkdir("user/pass");
     _mkdir("FreshCards");
     _mkdir("UsedCards");
-#else
-    mkdir("admin", 0755);
-    mkdir("admin/sold", 0755);
-    mkdir("user", 0755);
-    mkdir("user/pack", 0755);
-    mkdir("user/pass", 0755);
-    mkdir("FreshCards", 0755);
-    mkdir("UsedCards", 0755);
-#endif
-
     const char *files[] = {
         "user/number.txt",
         "admin/balance.txt",
@@ -92,7 +78,6 @@ void generateCardAndAppend(int type)
     {
         card_number[i] = (rand() % (9 - 0 + 1)) + 0;
     }
-
     char filepath[100];
     sprintf(filepath, "FreshCards/%d.txt", type);
 
@@ -134,7 +119,6 @@ void cardDialog()
     }
     printf("\n\n\t" GREEN "Successfully Created %d cards of %d mins" RESET "\n\n", amount, type);
 }
-
 void removeCard(int type, int lineNum)
 {
     char filepath[100];
@@ -199,13 +183,11 @@ void deleteCard(int min)
         }
         lineNum++;
     }
-
     if (!found)
     {
         printf(RED "Card does not exist!" RESET "\n");
         return;
     }
-
     fclose(fptr);
     removeCard(min, lineNum + 1);
     printf(GREEN "Card Deleted successfully" RESET "\n");
@@ -239,7 +221,6 @@ void deleteDialog()
         printf(RED "Invalid Selection" RESET "\n");
     }
 }
-
 void unblock(int lineNum)
 {
     FILE *realfile = fopen("admin/blocked.txt", "r");
@@ -310,7 +291,6 @@ void unlockAccount()
     char phn[_PHONE_SIZE];
     int found = 0;
     int lineNum = 0;
-
     while (fgets(phn, _PHONE_SIZE, fptr) != NULL)
     {
         if (strlen(phn) <= 1)
@@ -337,7 +317,6 @@ void unlockAccount()
         printf(RED "The number is not in the blocked list" RESET "\n");
     }
 }
-
 void showSoldCards(int min)
 {
     char filepath[100];
@@ -369,7 +348,6 @@ void showSoldCardsInTaka(int min)
     printf("\t %d Minutes: %d Taka\t", min, amount);
     fclose(fptr);
 }
-
 void showStock(int min)
 {
     char filepath[100];
@@ -378,7 +356,6 @@ void showStock(int min)
     FILE *fptr = fopen(filepath, "r");
     char real_card[_CARD_SIZE];
     int lineNum = 0;
-
     while (fgets(real_card, _CARD_SIZE, fptr) != NULL)
     {
         if (strlen(real_card) <= 1)
@@ -413,7 +390,6 @@ void showStatistics()
     printf("\n\n");
     showAdminBalance();
 }
-
 void formatDate(char stamp[])
 {
     time_t rawtime = (time_t)atol(stamp);
@@ -489,7 +465,6 @@ void showHistory()
     trans60 = 0;
     trans100 = 0;
 }
-
 void showUserTransaction(char phn[], int min)
 {
     char filepath[100];
@@ -553,11 +528,9 @@ void searchUserTransaction()
     trans60 = 0;
     trans100 = 0;
 }
-
 void adminPanel()
 {
     printf("\nWelcome to Admin Panel!\n\n" YELLOW "The Admin Menu:" RESET "\n\t0. Menu\n\t1. New Card\n\t2. Delete Card\n\t3. Unlock Account\n\t4. History\n\t5. Statistics\n\t6. Search\n\t7. Exit\n\n");
-
     while (1)
     {
         printf("[" GREEN "ADMIN" RESET "] Enter your choice: ");
@@ -617,7 +590,6 @@ void resetCurrentNumber()
     fprintf(fptr2, "%d", 0);
     fclose(fptr2);
 }
-
 void updateSold(int min)
 {
     char filepath[100];
@@ -651,7 +623,6 @@ void updateAdminBalance(int val)
     fprintf(fptr, "%s", finalBalance);
     fclose(fptr);
 }
-
 void showMinutes()
 {
     printf("\n\tAvailable Minutes: ");
@@ -833,7 +804,6 @@ void showNumber()
     printf("\n\nCurrent User: %s\n\n", number);
     fclose(fptr);
 }
-
 int isBlocked(char user_phn[])
 {
     FILE *fptr = fopen("admin/blocked.txt", "r");
@@ -865,7 +835,6 @@ int checkIfBlocked()
     char number[_PHONE_SIZE];
     fscanf(fptr, "%11s", number);
     fclose(fptr);
-
     if (isBlocked(number))
     {
         resetCurrentNumber();
@@ -883,7 +852,6 @@ void showDialog()
 {
     showNumber();
     printf(YELLOW "User Menu:" RESET "\n\t1. Check Balance\n\t2. Recharge\n\t3. Log out\n\t4. Exit\n\n");
-
     while (1)
     {
         printf("[" MAGENTA "USER" RESET "] Enter your choice: ");
@@ -924,13 +892,11 @@ void showDialog()
         }
     }
 }
-
 void clientPanel()
 {
     FILE *fptr = fopen("user/number.txt", "r+");
     char number[_PHONE_SIZE];
     fscanf(fptr, "%11s", number);
-
     if (strcmp(number, "0") == 0)
     {
         printf(YELLOW "Client Side" RESET "\nYou have to register or log in first. Enter phone Number: ");
@@ -1025,7 +991,6 @@ void clientPanel()
     }
 }
 // ***MAIN APP***
-
 int main()
 {
     srand(time(NULL));
